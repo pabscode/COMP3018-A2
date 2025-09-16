@@ -1,4 +1,28 @@
 {
+  "name": "comp3018-a2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pabscode/COMP3018-A2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pabscode/COMP3018-A2/issues"
+  },
+  "homepage": "https://github.com/pabscode/COMP3018-A2#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
