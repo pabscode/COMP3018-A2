@@ -24,14 +24,14 @@ app.use(express.json());
 
 // respond to GET request at endpoint "/" with message
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.send("Welcome Client");
 });
 
 /**
  * Health check endpoint that returns server status information
  * @returns JSON response with server health metrics
  */
-app.get("/api/v1/health", (req, res) => {
+app.get("/health", (req, res) => {
     const healthData: HealthCheckResponse = {
         status: "OK",
         uptime: process.uptime(),
