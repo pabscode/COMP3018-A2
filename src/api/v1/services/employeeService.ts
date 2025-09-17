@@ -19,7 +19,6 @@ export const getAllEmployees = async (): Promise<Employees[]> => {
  *      - email (string)
  *      - phone (string)
  *      - branchId (number)
- * 
  * @returns The new employee with a generated ID.
  */
 export const createEmployee = async (employeeData: {
