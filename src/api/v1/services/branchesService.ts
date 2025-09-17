@@ -1,4 +1,4 @@
-import { Branches} from "../models/branchModel";
+import { Branches } from "../models/branchModel";
 
 const branch: Branches[] = [];
 

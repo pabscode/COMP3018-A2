@@ -1,16 +1,6 @@
 // Employee Data
 
-// Interface representing Employees 
-
-export interface Employees {
-    id: number;
-    name: string;
-    position: string;
-    department: string;
-    email: string;
-    phone: string;
-    branchId: number;
-}
+import { Employees } from "src/api/v1/models/employeeModel";
 
 // Array of Employee Data
 export const employeesData: Employees[] = [

@@ -1,12 +1,6 @@
 // Branch Data
 
-// Interface representing Branches
-export interface Branches {
-    id: number;
-    name: string;
-    address: string;
-    phone: string;
-}
+import { Branches } from "src/api/v1/models/branchModel";
 
 // Array of Branches
 export const branchesData: Branches[] = [
