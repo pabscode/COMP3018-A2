@@ -1,4 +1,4 @@
-import { Employees } from "src/data/employee";
+import { Employees } from "../models/employeeModel";
 
 const employees: Employees[] = [];
 
