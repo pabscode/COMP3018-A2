@@ -1,6 +1,6 @@
 // Branch Data
 
-import { Branches } from "src/api/v1/models/branchModel";
+import { Branches } from "src/api/v1/models/branchesModel";
 
 // Array of Branches
 export const branchesData: Branches[] = [
