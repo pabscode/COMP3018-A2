@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
 import { Employees } from "../models/employeeModel";
-import { REPLCommand } from "repl";
 
 /**
  * Manages requests and resposnses to retrieve all employees
@@ -136,7 +135,7 @@ export const deleteItem = async (
 ): Promise<void> => {
     try {
         const id: string = req.params.id;
-        
+
         await employeeService.deleteEmployee(Number(id));
         res.status(HTTP_STATUS.OK).json({
             message: "Employee deleted successfully",
