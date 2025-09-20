@@ -4,7 +4,7 @@ import * as employeeService from "../services/employeeService";
 import { Employees } from "../models/employeeModel";
 
 /**
- * Manages requests and resposnses to retrieve all employees
+ * Manages requests and responses to retrieve all Employees
  * @param req - The express Request
  * @param res - The express Response
  * @param next = The express middleware chaining function
@@ -128,7 +128,7 @@ export const updateEmployee = async (
  * @param next - The express middleware chaining function
  */
 
-export const deleteItem = async (
+export const deleteEmployee = async (
     req: Request,
     res: Response,
     next: NextFunction
