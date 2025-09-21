@@ -1,3 +1,4 @@
+//could not find a way to use type annotation for this one.
 export const HTTP_STATUS = {
     // Success responses
     OK: 200,

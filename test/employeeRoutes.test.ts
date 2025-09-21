@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
-import { createEmployee, deleteEmployee, getAllEmployees, getAllEmployeesForABranch, getEmployeeById, getEmployeesByDepartment, updateEmployee } from "src/api/v1/services/employeeService";
 import { HTTP_STATUS } from "../src/api/v1/constants/httpConstants";
 import { Employees } from "src/api/v1/models/employeeModel";
 
@@ -32,7 +31,7 @@ describe("Employee Routes", () => {
 
     describe("GET /api/v1/employee/:id", () => {
         it("should call getEmployeeById controller", async() => {
-            const mockId = "67"
+            const mockId: string = "67"
 
             await request(app).get(`/api/v1/employee/:${mockId}`)
             expect(employeeController.getEmployeeById).toHaveBeenCalled();
@@ -41,7 +40,7 @@ describe("Employee Routes", () => {
 
     describe("GET /api/v1/employee/branch/:branchId", () => {
         it("should call getAllEmployeesForABranch controller", async() =>{
-            const mockBranchId = "23"
+            const mockBranchId: string = "23"
 
             await request(app).get(`/api/v1/employee/branch/:branchId":${mockBranchId}`)
             expect(employeeController.getAllEmployeesForABranch).toHaveBeenCalled();
@@ -50,7 +49,7 @@ describe("Employee Routes", () => {
 
     describe("GET /api/v1/employee/department/:departmentName", () => {
         it("should call getAllEmployeesByDepartment controller", async() =>{
-            const mockDepartmentName = "Sales"
+            const mockDepartmentName: string = "Sales"
 
             await request(app).get(`/api/v1/employee/department/:departmentName":${mockDepartmentName}`)
             expect(employeeController.getEmployeesByDepartment).toHaveBeenCalled();
@@ -74,7 +73,7 @@ describe("Employee Routes", () => {
 
     describe("PUT /api/v1/employee/:id", () => {
         it("should call updateEmployee controller with valid data", async () => {
-            const mockEmployee = {
+            const mockEmployee: {} = {
                 phone: "Updated phone number",
                 email: "Updated email",
             }; 

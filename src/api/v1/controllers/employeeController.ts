@@ -102,7 +102,7 @@ export const updateEmployee = async (
         const {name, position, department, email, phone, branchId} = req.body;
         
         // Updates the Employee object with the fields to be updated.
-        const updatedEmployee = await employeeService.updateEmployee(id, {
+        const updatedEmployee: Employees = await employeeService.updateEmployee(id, {
             name, 
             position, 
             department, 

@@ -87,7 +87,7 @@ export const updateBranch = async (
         const {name, address, phone} = req.body;
 
         // Updates branch object with the fields to be updated
-        const updatedBranch = await branchesService.updateBranch(id, {
+        const updatedBranch: Branches = await branchesService.updateBranch(id, {
                 name, 
                 phone,
                 address

@@ -93,7 +93,7 @@ describe("Branches Controller", () => {
             });
         });
         it("should handle error if list cannot be retrieved", async () => {
-            const error = new Error("Failed to retrieve branches");
+            const error: Error = new Error("Failed to retrieve branches");
             (branchesService.getAllBranches as jest.Mock).mockRejectedValue(error);
 
             await branchesController.getAllBranches(
@@ -133,7 +133,7 @@ describe("Branches Controller", () => {
         })
 
         it("should handle errors for invalid branch ID", async () => {
-            const error = new Error("Branch ID 6 does not exist");
+            const error: Error = new Error("Branch ID 6 does not exist");
             (branchesService.getBranchById as jest.Mock).mockRejectedValue(error);
 
             mockReq.params = { id: "6" };
@@ -198,7 +198,7 @@ describe("Branches Controller", () => {
                 });
         })
         it("should handle invalid ID", async () => {
-            const error = new Error("Branch with ID 88 does not exist");
+            const error: Error = new Error("Branch with ID 88 does not exist");
             (branchesService.deleteBranch as jest.Mock).mockRejectedValue(error);
 
             mockReq.params = { id: "88" };

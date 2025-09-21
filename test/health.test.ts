@@ -1,11 +1,11 @@
-import request from "supertest";
+import request, {Response} from "supertest";
 import app from "../src/app";
 
 // Health Test Checkpoint
 
 describe("GET /health", () => {
   it("should return server health status", async () => {
-    const response = await request(app).get("/health");
+    const response: Response = await request(app).get("/health");
 
         expect(response.body.status).toBe("OK");
         expect(response.body).toHaveProperty("uptime");

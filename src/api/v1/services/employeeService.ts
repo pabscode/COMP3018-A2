@@ -1,7 +1,7 @@
 import { Employees } from "../models/employeeModel";
 import { employeesData } from "src/data/employee";
 
-let employees: Employees[] = [...employeesData];
+const employees: Employees[] = [...employeesData];
 
 /**
  * Retrieves all employees 
@@ -122,7 +122,7 @@ export const getAllEmployeesForABranch =  (branchId: number): Employees[] =>{
 
     // Check if any employee is associated to this branch ID
 
-    const branchExists: Boolean = employees.some((employee: Employees) => employee.branchId === branchId);
+    const branchExists: boolean = employees.some((employee: Employees) => employee.branchId === branchId);
     
     if(!branchExists){
         throw new Error(`Branch ID ${branchId} not found.`);

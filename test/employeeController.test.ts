@@ -3,7 +3,6 @@ import { HTTP_STATUS } from "../src/api/v1/constants/httpConstants";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
 import * as employeeService from "../src/api/v1/services/employeeService";
 import { Employees } from "src/api/v1/models/employeeModel";
-import { Mock } from "node:test";
 
 jest.mock("../src/api/v1/services/employeeService");
 
@@ -108,7 +107,7 @@ describe("Employee Controller", () => {
         })
 
         it("should handle the error if the list cannot be retrieved", async () => {
-            const error = new Error("Employee list was not retrieved.");
+            const error: Error = new Error("Employee list was not retrieved.");
             (employeeService.getAllEmployees as jest.Mock).mockRejectedValue(error);
 
             await employeeController.getAllEmployees(
@@ -153,7 +152,7 @@ describe("Employee Controller", () => {
         });
 
         it("should handle errors for invalid employee ID", async () => {
-            const error = new Error("Employee ID 2 does not exist");
+            const error: Error = new Error("Employee ID 2 does not exist");
             (employeeService.getEmployeeById as jest.Mock).mockRejectedValue(error);
 
             mockReq.params = { id: "2" };
@@ -222,7 +221,7 @@ describe("Employee Controller", () => {
                 });
         })
         it("should handle invalid ID", async () => {
-            const error = new Error("Employee with ID 67 does not exist");
+            const error: Error = new Error("Employee with ID 67 does not exist");
             (employeeService.deleteEmployee as jest.Mock).mockRejectedValue(error);
 
             mockReq.params = { id: "67" };
