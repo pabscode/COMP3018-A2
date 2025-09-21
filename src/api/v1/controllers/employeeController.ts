@@ -170,3 +170,30 @@ export const getEmployeeById = async (
         next(error);
     }
 };
+
+export const getAllEmployeesForABranch = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try{
+        const branchId = parseInt(req.params.branchId);
+    
+        if(isNaN(branchId)){
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: "Invalid branch ID."
+            });
+            return;
+        }
+
+        const employees = employeeService.getAllEmployeesForABranch(branchId);
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employees for branch retrieved successfully.",
+            data: employees,
+        });
+
+    }catch (error: unknown){
+        next(error);
+    }
+}

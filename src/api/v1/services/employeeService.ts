@@ -110,3 +110,25 @@ export const getEmployeeById = async (id: number): Promise<Employees> => {
 
     return structuredClone(findEmployee)
 }
+
+/**
+ * Retrieves all employees belonging to a specific branch
+ * @param branchId - The ID of the branch to filter employees by
+ * @returns An array of the Employees that belong to the specified branch
+ * @throws Error if the branch ID does not exist
+ */
+export const getAllEmployeesForABranch =  (branchId: number): Employees[] =>{
+
+    // Check if any employee is associated to this branch ID
+
+    const branchExists: Boolean = employees.some((employee: Employees) => employee.branchId === branchId);
+    
+    if(!branchExists){
+        throw new Error(`Branch ID ${branchId} not found.`);
+    }
+    
+    // Filter employees that match the branch ID
+    const foundEmployees: Employees []= employees.filter((employee: Employees) => employee.branchId === branchId);
+
+    return structuredClone(foundEmployees)
+}
