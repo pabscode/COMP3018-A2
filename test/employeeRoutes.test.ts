@@ -73,7 +73,7 @@ describe("Employee Routes", () => {
 
     describe("PUT /api/v1/employee/:id", () => {
         it("should call updateEmployee controller with valid data", async () => {
-            const mockEmployee: {} = {
+            const mockEmployee: Object = {
                 phone: "Updated phone number",
                 email: "Updated email",
             }; 
