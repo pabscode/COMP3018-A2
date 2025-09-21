@@ -144,3 +144,28 @@ export const deleteEmployee = async (
         next(error);
     }
 };
+
+/**
+ * Manages requests and responses to retrieve an Employee by ID
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const getEmployeeById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const id: string = req.params.id;
+
+        const employee: Employees = await employeeService.getEmployeeById(Number(id));
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employee retrieved successfully.",
+            data: employee,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};

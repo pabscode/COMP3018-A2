@@ -94,3 +94,19 @@ export const deleteEmployee = async (id: number): Promise<void> => {
     // If ID is found, remove at that index
     employees.splice(index,1)
 }
+
+/**
+ * Gets a single Employee by ID
+ * @param id - The ID of the Employee to return
+ * @returns The Employee information with the matching ID
+ * @throws Error if the employee ID does not exist
+ */
+export const getEmployeeById = async (id: number): Promise<Employees> => {
+    const findEmployee: Employees | undefined = employees.find((employee: Employees) => employee.id === id);
+
+    if (!findEmployee){
+        throw new Error (`Employee with ID ${id} does not exist`);
+    }
+
+    return structuredClone(findEmployee)
+}
