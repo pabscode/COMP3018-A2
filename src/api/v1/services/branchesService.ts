@@ -1,7 +1,7 @@
 import { Branches } from "../models/branchesModel";
 import { branchesData } from "src/data/branches";
 
-const branch: Branches[] = [...branchesData];
+let branch: Branches[] = [...branchesData];
 
 /**
  * Retrieves all branches

@@ -1,7 +1,7 @@
 import { Employees } from "../models/employeeModel";
 import { employeesData } from "src/data/employee";
 
-const employees: Employees[] = [...employeesData];
+let employees: Employees[] = [...employeesData];
 
 /**
  * Retrieves all employees 
