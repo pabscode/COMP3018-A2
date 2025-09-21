@@ -3,7 +3,7 @@ import * as branchController from "../controllers/branchesController";
 
 const router: Router = express.Router();
 
-// "/api/v1/items" prefixes all below routes
+// "/api/v1/branches" prefixes all below routes
 router.get("/", branchController.getAllBranches);
 router.post("/", branchController.createBranch);
 router.put("/:id", branchController.updateBranch);

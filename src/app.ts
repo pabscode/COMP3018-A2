@@ -2,6 +2,8 @@
 import express, { Express } from "express";
 import morgan from "morgan";
 
+import employeeRoutes from "./api/v1/routes/employeesRoutes";
+import branchesRoutes from "./api/v1/routes/branchesRoutes";
 
 // initialize the express application
 const app: Express = express();
@@ -41,5 +43,11 @@ app.get("/health", (req, res) => {
 
     res.json(healthData);
 });
+
+
+//ROUTE IMPORTS
+app.use("/api/v1/employee", employeeRoutes);
+app.use("/api/v1/branches", branchesRoutes);
+
 
 export default app;
