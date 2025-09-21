@@ -1,11 +1,13 @@
 import request from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
-import { createEmployee, deleteEmployee, getAllEmployees, updateEmployee } from "src/api/v1/services/employeeService";
+import { createEmployee, deleteEmployee, getAllEmployees, getEmployeeById, updateEmployee } from "src/api/v1/services/employeeService";
 import { HTTP_STATUS } from "../src/api/v1/constants/httpConstants";
+import { Employees } from "src/api/v1/models/employeeModel";
 
 jest.mock("../src/api/v1/controllers/employeeController", () => ({
     getAllEmployees: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
+    getEmployeeById: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
     createEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.CREATED).send()),
     updateEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
     deleteEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
@@ -25,15 +27,24 @@ describe("Employee Routes", () => {
         })
     })
 
+    describe("GET /api/v1/employee/:id", () => {
+        it("should call getEmployeeById controller", async() => {
+            const mockId = "67"
+
+            await request(app).get(`/api/v1/employee/:${mockId}`)
+            expect(employeeController.getEmployeeById).toHaveBeenCalled();
+        })
+    })
+
     describe("POST /api/v1/employee/", () => {
         it("should call createEmployee controller with valid data", async() => {
-            const mockEmployee = {
+            const mockEmployee: Omit <Employees, "id"> = {
                 name: "Test Employee",
                 position: "Test position",
                 department: "Test department",
                 email: "Test email",
                 phone: "Test phone",
-                branchId: "Test branch ID"
+                branchId: 2
             }
             await request(app).post("/api/v1/employee/").send(mockEmployee);
             expect(employeeController.createEmployee).toHaveBeenCalled();

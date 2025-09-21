@@ -97,12 +97,12 @@ export const updateEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const { id } = req.params;
+        const id: number = parseInt(req.params.id);
 
         const {name, position, department, email, phone, branchId} = req.body;
         
         // Updates the Employee object with the fields to be updated.
-        const updatedEmployee = await employeeService.updateEmployee(Number(id), {
+        const updatedEmployee = await employeeService.updateEmployee(id, {
             name, 
             position, 
             department, 
@@ -134,9 +134,9 @@ export const deleteEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
+        const id: number = parseInt(req.params.id);
 
-        await employeeService.deleteEmployee(Number(id));
+        await employeeService.deleteEmployee(id);
         res.status(HTTP_STATUS.OK).json({
             message: "Employee deleted successfully",
         });
@@ -157,9 +157,10 @@ export const getEmployeeById = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
 
-        const employee: Employees = await employeeService.getEmployeeById(Number(id));
+        const id: number = parseInt(req.params.id);
+
+        const employee: Employees = await employeeService.getEmployeeById(id);
 
         res.status(HTTP_STATUS.OK).json({
             message: "Employee retrieved successfully.",
