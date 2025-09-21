@@ -171,6 +171,12 @@ export const getEmployeeById = async (
     }
 };
 
+/**
+ * Manages requests and responses to retrieve all employees from a specific branch
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const getAllEmployeesForABranch = async (
     req: Request,
     res: Response,
@@ -197,3 +203,36 @@ export const getAllEmployeesForABranch = async (
         next(error);
     }
 }
+
+/**
+ * Manages requests and responses to retrieve all employees in a department
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const getEmployeesByDepartment = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try{
+        const departmentName: string = req.params.departmentName;
+
+        if(!departmentName || departmentName.trim() === ""){
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: "Department name is required."
+            });
+        }
+        
+        const employees: Employees[] = await employeeService.getEmployeesByDepartment(departmentName);
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employees in department retrieved successfully.",
+            data: employees,
+        });
+
+    }catch(error: unknown){
+        next(error);
+    }
+}
+

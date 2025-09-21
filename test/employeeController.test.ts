@@ -271,7 +271,7 @@ describe("Employee Controller", () => {
         });
 
         it("should return 400 if branch ID is not a number", async () => {
-            mockReq.params = { id: "invalid id" }; 
+            mockReq.params = { branchId: "invalid id" }; 
 
             await employeeController.getAllEmployeesForABranch(
                 mockReq as Request,
@@ -285,4 +285,53 @@ describe("Employee Controller", () => {
             });
         });
     });
+    
+    describe("getEmployeesByDepartment", () => {
+        it("should handle a successful retrieval", async () => {
+            const mockEmployees: Employees[] = [
+                {
+                    id: 1,
+                    name: "Test Employee 1",
+                    position: "Test Position 1",
+                    department: "Test Department 1",
+                    email: "Test email 1",
+                    phone: "Test phone 1",
+                    branchId: 1
+                },
+            ];
+
+            mockReq.params = { departmentName: "Test Department 1" };
+
+            (employeeService.getEmployeesByDepartment as jest.Mock).mockResolvedValue(mockEmployees);
+
+            await employeeController.getEmployeesByDepartment(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext
+            );
+
+            expect(employeeService.getEmployeesByDepartment).toHaveBeenCalledWith("Test Department 1")
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Employees in department retrieved successfully.",
+                data: mockEmployees,
+            });
+        });
+
+        it("should return 400 if department name is missing", async () => {
+            mockReq.params = { departmentName: "" };
+
+            await employeeController.getEmployeesByDepartment(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext
+            );
+
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Department name is required.",
+            });
+        });
+    });
+
 });

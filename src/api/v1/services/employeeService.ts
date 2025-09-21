@@ -132,3 +132,22 @@ export const getAllEmployeesForABranch =  (branchId: number): Employees[] =>{
 
     return structuredClone(foundEmployees)
 }
+
+/**
+ * Retrieves all employees belonging to a specific department
+ * @param departmentName - The department to filter employees by
+ * @returns An array of the Employees that belong to the specified department
+ * @throws Error if no employees are found in the given department
+ */
+export const getEmployeesByDepartment = (departmentName: string): Employees[] => {
+
+    const departmentExists: boolean = employees.some((employee: Employees) => employee.department.toLowerCase() === departmentName.toLowerCase());
+
+    if (!departmentExists) {
+        throw new Error(`Department '${departmentName}' not found.`);
+    }
+
+    const foundEmployees: Employees[] = employees.filter((employee: Employees) => employee.department.toLowerCase() === departmentName.toLowerCase());
+
+    return structuredClone(foundEmployees);
+};
