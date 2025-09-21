@@ -79,3 +79,19 @@ export const deleteBranch = async (id: number): Promise<void> => {
 
     branch.splice(index, 1)
 }
+
+/**
+ * Gets a single branch by ID
+ * @param id - The ID of the branch to return
+ * @returns The Branch information with the matching ID
+ * @throws Error if the branch ID does not exist
+ */
+export const getBranchById = async (id: number): Promise<Branches> => {
+    const findBranch: Branches | undefined = branch.find((branch: Branches) => branch.id === id);
+
+    if (!findBranch){
+        throw new Error (`Branch with ID ${id} does not exist`);
+    }
+
+    return structuredClone(findBranch)
+}

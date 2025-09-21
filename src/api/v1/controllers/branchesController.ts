@@ -125,3 +125,29 @@ export const deleteBranch = async (
         next(error);
     }
 };
+
+/**
+ * Manages requests and responses to retrieve an Branch by ID
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const getBranchById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+
+        const id: number = parseInt(req.params.id);
+
+        const branch: Branches = await branchesService.getBranchById(id);
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employee retrieved successfully.",
+            data: branch,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
