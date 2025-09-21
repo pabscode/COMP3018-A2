@@ -236,5 +236,53 @@ describe("Employee Controller", () => {
             expect(employeeService.deleteEmployee).toHaveBeenCalledWith(67);
             expect(mockNext).toHaveBeenCalledWith(error);
         });
-    })
+    });
+
+    describe("getAllEmployeesForABranch", () => {
+        it("should handle a succesful retrieval", async () =>{
+            const mockEmployees: Employees[] = [
+                {
+                    id: 1,
+                    name: "Test Employee 1",
+                    position: "Test Position 1",
+                    department: "Test Department 1",
+                    email: "Test email 1",
+                    phone: "Test phone 1",
+                    branchId: 1
+                },
+            ];
+
+            mockReq.params = { branchId: "1"};
+
+            (employeeService.getAllEmployeesForABranch as jest.Mock).mockResolvedValue(mockEmployees);
+
+            await employeeController.getAllEmployeesForABranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext
+            );
+
+            expect(employeeService.getAllEmployeesForABranch).toHaveBeenCalledWith(1);
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Employees for branch retrieved successfully.",
+                data: mockEmployees,
+            });
+        });
+
+        it("should return 400 if branch ID is not a number", async () => {
+            mockReq.params = { id: "invalid id" }; 
+
+            await employeeController.getAllEmployeesForABranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext
+            );
+
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Invalid branch ID."
+            });
+        });
+    });
 });

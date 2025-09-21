@@ -177,16 +177,16 @@ export const getAllEmployeesForABranch = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const branchId = parseInt(req.params.branchId);
+        const branchId: number = parseInt(req.params.branchId);
     
         if(isNaN(branchId)){
             res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: "Invalid branch ID."
             });
-            return;
+
         }
 
-        const employees = employeeService.getAllEmployeesForABranch(branchId);
+        const employees: Employees[] = await employeeService.getAllEmployeesForABranch(branchId);
 
         res.status(HTTP_STATUS.OK).json({
             message: "Employees for branch retrieved successfully.",

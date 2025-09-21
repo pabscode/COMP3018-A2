@@ -1,13 +1,14 @@
 import request from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
-import { createEmployee, deleteEmployee, getAllEmployees, getEmployeeById, updateEmployee } from "src/api/v1/services/employeeService";
+import { createEmployee, deleteEmployee, getAllEmployees, getAllEmployeesForABranch, getEmployeeById, updateEmployee } from "src/api/v1/services/employeeService";
 import { HTTP_STATUS } from "../src/api/v1/constants/httpConstants";
 import { Employees } from "src/api/v1/models/employeeModel";
 
 jest.mock("../src/api/v1/controllers/employeeController", () => ({
     getAllEmployees: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
     getEmployeeById: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
+    getAllEmployeesForABranch: jest.fn((req,res) => res.status(HTTP_STATUS.OK).send()),
     createEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.CREATED).send()),
     updateEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
     deleteEmployee: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
@@ -33,6 +34,15 @@ describe("Employee Routes", () => {
 
             await request(app).get(`/api/v1/employee/:${mockId}`)
             expect(employeeController.getEmployeeById).toHaveBeenCalled();
+        })
+    })
+
+    describe("GET /api/v1/employee/branch/:branchId", () => {
+        it("should call getAllEmployeesForABranch controller", async() =>{
+            const mockBranchId = "23"
+
+            await request(app).get(`/api/v1/employee/branch/:branchId":${mockBranchId}`)
+            expect(employeeController.getAllEmployeesForABranch).toHaveBeenCalled();
         })
     })
 
@@ -69,4 +79,5 @@ describe("Employee Routes", () => {
             expect(employeeController.deleteEmployee).toHaveBeenCalled();
         });
     });
+
 })
