@@ -45,8 +45,8 @@ describe("Branch Routes", () => {
     });
 
     describe("PUT /api/v1/branches/:id", () => {
-        it("should call updateBranch controller with valid data", async () => {
-            const mockBranchUpdate: Object = {
+        it("should call updateBranch controller wit h valid data", async () => {
+            const mockBranchUpdate: object = {
                 name: "Updated Branch",
                 address: "Updated Street",
                 phone: "Updated Phone #",
