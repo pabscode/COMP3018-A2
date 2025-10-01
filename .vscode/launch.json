@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "name": "Debug Server",
-            "runtimeArgs": ["-r", "ts-node/register"],
+            "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
             "program": "${workspaceFolder}/src/server.ts",
             "console": "integratedTerminal"
         },
