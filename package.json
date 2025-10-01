@@ -25,6 +25,7 @@
   "homepage": "https://github.com/pabscode/COMP3018-A2#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "@types/joi": "^17.2.2",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.5.0",
     "@types/supertest": "^6.0.3",
@@ -38,6 +39,7 @@
   "dependencies": {
     "@types/express": "^5.0.3",
     "express": "^5.1.0",
+    "joi": "^18.0.1",
     "morgan": "^1.10.1"
   }
 }
