@@ -34,7 +34,6 @@ export const createBranch = async (branchData:{
     branch.push(newBranch)
 
     return structuredClone(newBranch)
-
 }
 
 /**
