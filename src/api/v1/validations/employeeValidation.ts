@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { ObjectSchema } from "joi";
 
 /**
  * Employee Schema organised by request type
@@ -20,16 +20,17 @@ export const employeeSchema = {
                 "string.empty": "Department cannot be empty",
             }),
             email: Joi.string().required().messages({
-               "any.required": "Email is required",
-               "string.empty": "Email cannot be empty", 
+                "any.required": "Email is required",
+                "string.empty": "Email cannot be empty", 
+                "string.email": "Email must be valid",
             }),
             phone: Joi.string().required().messages({
-               "any.required": "Phone is required",
-               "string.empty": "Phone cannot be empty", 
+                "any.required": "Phone is required",
+                "string.empty": "Phone cannot be empty", 
             }),
             branchId: Joi.string().required().messages({
-               "any.required": "branchId is required",
-               "string.empty": "branchId cannot be empty", 
+                "any.required": "branchId is required",
+                "string.empty": "branchId cannot be empty", 
             }),
         }),
     },
@@ -53,13 +54,14 @@ export const employeeSchema = {
                 "string.empty": "Department cannot be empty",
             }),
             email: Joi.string().optional().messages({
-               "string.empty": "Email cannot be empty", 
+                "string.empty": "Email cannot be empty", 
+                "string.email": "Email must be valid",
             }),
             phone: Joi.string().optional().messages({
-               "string.empty": "Phone cannot be empty", 
+                "string.empty": "Phone cannot be empty", 
             }),
             branchId: Joi.string().optional().messages({
-               "string.empty": "branchId cannot be empty", 
+                "string.empty": "branchId cannot be empty", 
             }),
         })
     }
