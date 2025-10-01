@@ -17,7 +17,7 @@ export const branchesSchema = {
             }),
             phone: Joi.string().required().messages({
                 "any.required": "Phone is required",
-                "string.empty": "Phone cannot be empty",
+                "string.empty": "Phone number cannot be empty",
             }),
         }),
     },
@@ -25,9 +25,9 @@ export const branchesSchema = {
     // PUT /api/v1/branches/:id - Update Branch
     update: {
         params: Joi.object({
-            id: Joi.string().required().messages({
+            id: Joi.number().required().messages({
                 "any.required": "Branch ID is required",
-                "string.empty": "Branch ID cannot be empty",
+                "number.base": "Branch ID must be a number",
             }),
         }),
         body: Joi.object({
@@ -37,8 +37,8 @@ export const branchesSchema = {
             address: Joi.string().optional().messages({
                 "string.empty": "Address cannot be empty",
             }),
-            aphonedress: Joi.string().optional().messages({
-                "string.empty": "Phone cannot be empty",
+            phone: Joi.string().optional().messages({
+                "string.empty": "Phone number cannot be empty",
             }),
         }),
     },
