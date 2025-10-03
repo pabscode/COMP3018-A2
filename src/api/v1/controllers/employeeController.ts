@@ -37,49 +37,21 @@ export const createEmployee = async (
     next: NextFunction,
 ): Promise<void> => {
     try{
-        // Validation for required Employee fields.
-        if (!req.body.name){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee name is required."
-            })
+        const {name, position, department, email, phone, branchId} = req.body;
+        const newEmployee: Employees = await employeeService.createEmployee({
+            name,
+            position,
+            department,
+            email,
+            phone,
+            branchId
+        });
 
-        } else if (!req.body.position){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee position is required."
-            })
-
-        } else if (!req.body.department){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee department is required."
-            })
-        } else if (!req.body.email){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee email is required."
-            })
-        } else if (!req.body.phone){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee phone is required."
-            })
-        } else if (!req.body.branchId){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee branch ID is required."
-            })
-        } else {
-            const {name, position, department, email, phone, branchId} = req.body;
-            const newEmployee: Employees = await employeeService.createEmployee({
-                name,
-                position,
-                department,
-                email,
-                phone,
-                branchId
-            });
-
-            res.status(HTTP_STATUS.CREATED).json({
-                message: "Employee has been created successfully",
-                data: newEmployee
-            });
-        } 
+        res.status(HTTP_STATUS.CREATED).json({
+            message: "Employee has been created successfully",
+            data: newEmployee
+        });
+        
     }catch (error: unknown){
         next(error);
     }
