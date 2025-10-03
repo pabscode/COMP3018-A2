@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { ObjectSchema } from "joi";
 
 /**
  * Branches Schema organised by request type

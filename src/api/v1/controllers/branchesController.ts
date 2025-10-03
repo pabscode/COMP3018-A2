@@ -38,31 +38,13 @@ export const createBranch = async (
     next: NextFunction,
 ): Promise<void> => {
     try{
-
-        //Validation for required branch fields
-        if (!req.body.name){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch name is required."
-            })
-
-        } else if (!req.body.address){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch address is required."
-            })
-        } else if (!req.body.phone){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch phone # is required."
-            })
-        } else {
-            const {name, address, phone} = req.body;
-            const newBranch: Branches = await branchesService.createBranch({name, address, phone});
-                
-            res.status(HTTP_STATUS.CREATED).json({
-                message: "Branch has been created successfully.",
-                data: newBranch
-            });
-
-        }
+        const {name, address, phone} = req.body;
+        const newBranch: Branches = await branchesService.createBranch({name, address, phone});
+            
+        res.status(HTTP_STATUS.CREATED).json({
+            message: "Branch has been created successfully.",
+            data: newBranch
+        });
 
     } catch (error: unknown){
         next(error);
