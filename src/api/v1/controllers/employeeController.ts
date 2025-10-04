@@ -69,7 +69,7 @@ export const updateEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const {name, position, department, email, phone, branchId} = req.body;
         
@@ -106,7 +106,7 @@ export const deleteEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         await employeeService.deleteEmployee(id);
         res.status(HTTP_STATUS.OK).json({
@@ -129,8 +129,7 @@ export const getEmployeeById = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const employee: Employees = await employeeService.getEmployeeById(id);
 
@@ -155,13 +154,13 @@ export const getAllEmployeesForABranch = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const branchId: number = parseInt(req.params.branchId);
+        const branchId: string = req.params.branchId;
     
-        if(isNaN(branchId)){
+        if(!branchId || branchId.trim() === ""){
             res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: "Invalid branch ID."
             });
-
+            return;
         }
 
         const employees: Employees[] = await employeeService.getAllEmployeesForABranch(branchId);
@@ -194,6 +193,7 @@ export const getEmployeesByDepartment = async (
             res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: "Department name is required."
             });
+            return;
         }
         
         const employees: Employees[] = await employeeService.getEmployeesByDepartment(departmentName);
@@ -207,4 +207,3 @@ export const getEmployeesByDepartment = async (
         next(error);
     }
 }
-

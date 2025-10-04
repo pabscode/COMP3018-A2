@@ -1,11 +1,11 @@
 // Interface representing Employees 
 
 export interface Employees {
-    id: number;
+    id: string;
     name: string;
     position: string;
     department: string;
     email: string;
     phone: string;
-    branchId: number;
+    branchId: string;
 }

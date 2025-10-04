@@ -28,9 +28,9 @@ export const employeeSchema = {
                 "any.required": "Phone is required",
                 "string.empty": "Phone cannot be empty", 
             }),
-            branchId: Joi.number().required().messages({
+            branchId: Joi.string().required().messages({
                 "any.required": "branchId is required",
-                "number.base": "branchId must be a number", 
+                "string.empty": "BranchId cannot be empty", 
             }),
         }),
     },
@@ -38,9 +38,9 @@ export const employeeSchema = {
     // PUT /api/v1/employee/:id - Update Employee
     update: {
         params: Joi.object({
-            id: Joi.number().required().messages({
+            id: Joi.string().required().messages({
                 "any.required": "Employee ID is required",
-                "number.base": "Employee ID must be a number",
+                "string.empty": "Employee ID cannot be empty",
             }),
         }),
         body: Joi.object({
@@ -60,8 +60,8 @@ export const employeeSchema = {
             phone: Joi.string().optional().messages({
                 "string.empty": "Phone cannot be empty", 
             }),
-            branchId: Joi.number().optional().messages({
-                "number.base": "branchId must be a number", 
+            branchId: Joi.string().optional().messages({
+                "string.empty": "BranchId cannot be empty", 
             }),
         })
     }

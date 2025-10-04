@@ -1,4 +1,4 @@
-import { DocumentData, QuerySnapshot } from "firebase-admin/firestore";
+import { DocumentData, DocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
 import { Employees } from "../models/employeeModel";
 import {
     createDocument,
@@ -21,7 +21,7 @@ export const getAllEmployees = async (): Promise<Employees[]> => {
         const employees: Employees[] = snapshot.docs.map((doc) => {
             const data: DocumentData = doc.data();
             return {
-                id: Number(doc.id),
+                id: doc.id,
                 ...data,
             } as Employees;
         });
@@ -48,7 +48,7 @@ export const createEmployee = async (employeeData: {
     department: string;
     email: string;
     phone: string;
-    branchId: number; 
+    branchId: string; 
 }): Promise<Employees> => {
     try{
         const newEmployee: Partial<Employees> ={
@@ -103,15 +103,14 @@ export const updateEmployee = async (
  * @param id - The ID of the employee to be deleted 
  * @throws - Error if employee with ID is not found
  */
-export const deleteEmployee = async (id: number): Promise<void> => {
-    const index: number = employees.findIndex((employee: Employees) => employee.id === id);
+export const deleteEmployee = async (id: string): Promise<void> => {
+    const employee: Employees = await getEmployeeById(id);
 
-    if (index === -1){
+    if (!employee){
         throw new Error (`Employee with ID ${id} does not exist`);
     }
 
-    // If ID is found, remove at that index
-    employees.splice(index,1)
+    await deleteDocument(COLLECTION, id);
 }
 
 /**
@@ -120,14 +119,20 @@ export const deleteEmployee = async (id: number): Promise<void> => {
  * @returns The Employee information with the matching ID
  * @throws Error if the employee ID does not exist
  */
-export const getEmployeeById = async (id: number): Promise<Employees> => {
-    const findEmployee: Employees | undefined = employees.find((employee: Employees) => employee.id === id);
+export const getEmployeeById = async (id: string): Promise<Employees> => {
+    const doc: DocumentSnapshot | null = await getDocumentById(COLLECTION, id);
 
-    if (!findEmployee){
+    if(!doc){
         throw new Error (`Employee with ID ${id} does not exist`);
     }
 
-    return structuredClone(findEmployee)
+    const data: DocumentData | undefined = doc.data();
+    const employee: Employees = {
+        id: doc.id,
+        ...data,
+    } as Employees;
+
+    return structuredClone(employee);
 }
 
 /**
@@ -136,7 +141,7 @@ export const getEmployeeById = async (id: number): Promise<Employees> => {
  * @returns An array of the Employees that belong to the specified branch
  * @throws Error if the branch ID does not exist
  */
-export const getAllEmployeesForABranch =  (branchId: number): Employees[] =>{
+export const getAllEmployeesForABranch =  (branchId: string): Employees[] =>{
 
     // Check if any employee is associated to this branch ID
 
