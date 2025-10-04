@@ -65,36 +65,37 @@ export const createEmployee = async (employeeData: {
 };
 
 /**
- * 
- * @param id - The id of the employee to update
- * @param employeeData - The fields to update
- *      - name (string)
- *      - position (string)
- *      - department (string)
- *      - email (string)
- *      - phone (string)
- *      - branchId (number)
- * @returns The employee with updated information
- * @throws Error if employee with ID is not found
+ * Updates (replaces) an existing employee
+ * @param id - The ID of the employee to update
+ * @param employeeData - The fields to update (name, position, department, email, phone, and/or branchId)
+ * @returns The updated employee
+ * @throws Error if employee with given ID is not found
  */
 export const updateEmployee = async (
-    id: number,
+    id: string,
     employeeData: Pick<Employees, "name" | "position" | "department" | "email" | "phone" | "branchId">
-): Promise <Employees> => {
-
-    const index: number = employees.findIndex((employee: Employees) => employee.id === id);
-
-    // Throw error if the Employee associated with the ID does not exist.
-    if(index === -1){
-        throw new Error (`Employee with ID ${id} does not exist`);
+): Promise<Employees> => {
+    // check if the employee exists before updating
+    const employee: Employees = await getEmployeeById(id);
+    if (!employee) {
+        throw new Error(`Employee with ID ${id} not found`);
     }
 
-    employees[index] ={
-        ...employees[index],
-        ...employeeData
+    const updatedEmployee: Employees = {
+        ...employee,
     };
 
-    return structuredClone(employees[index]);
+    // Update only defined values
+    if (employeeData.name !== undefined) updatedEmployee.name = employeeData.name;
+    if (employeeData.position !== undefined) updatedEmployee.position = employeeData.position;
+    if (employeeData.department !== undefined) updatedEmployee.department = employeeData.department;
+    if (employeeData.email !== undefined) updatedEmployee.email = employeeData.email;
+    if (employeeData.phone !== undefined) updatedEmployee.phone = employeeData.phone;
+    if (employeeData.branchId !== undefined) updatedEmployee.branchId = employeeData.branchId;
+
+    await updateDocument<Employees>(COLLECTION, id, updatedEmployee);
+
+    return structuredClone(updatedEmployee);
 };
 
 /**
