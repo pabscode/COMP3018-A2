@@ -2,7 +2,7 @@
  * Interface representing branches
  */
 export interface Branches {
-    id: string;
+    id: number;
     name: string;
     address: string;
     phone: string;

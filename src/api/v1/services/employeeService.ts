@@ -39,7 +39,7 @@ export const getAllEmployees = async (): Promise<Employees[]> => {
  *      - department (string)
  *      - email (string)
  *      - phone (string)
- *      - branchId (number)
+ *      - branchId (string)
  * @returns The new employee with a generated ID.
  */
 export const createEmployee = async (employeeData: {
@@ -57,7 +57,7 @@ export const createEmployee = async (employeeData: {
 
         const employeeId: string = await createDocument(COLLECTION, newEmployee);
         
-        return structuredClone({ employeeId, ...newEmployee } as Employees);
+        return structuredClone({ id: employeeId, ...newEmployee } as Employees);
     } catch (error: unknown) {
         throw error;
     }
@@ -85,7 +85,6 @@ export const updateEmployee = async (
         ...employee,
     };
 
-    // Update only defined values
     if (employeeData.name !== undefined) updatedEmployee.name = employeeData.name;
     if (employeeData.position !== undefined) updatedEmployee.position = employeeData.position;
     if (employeeData.department !== undefined) updatedEmployee.department = employeeData.department;
@@ -99,7 +98,7 @@ export const updateEmployee = async (
 };
 
 /**
- * Deletes an employee from the array
+ * Deletes an employee from Firestore
  * @param id - The ID of the employee to be deleted 
  * @throws - Error if employee with ID is not found
  */
@@ -122,7 +121,7 @@ export const deleteEmployee = async (id: string): Promise<void> => {
 export const getEmployeeById = async (id: string): Promise<Employees> => {
     const doc: DocumentSnapshot | null = await getDocumentById(COLLECTION, id);
 
-    if(!doc){
+    if(!doc || !doc.exists){
         throw new Error (`Employee with ID ${id} does not exist`);
     }
 
@@ -139,22 +138,22 @@ export const getEmployeeById = async (id: string): Promise<Employees> => {
  * Retrieves all employees belonging to a specific branch
  * @param branchId - The ID of the branch to filter employees by
  * @returns An array of the Employees that belong to the specified branch
- * @throws Error if the branch ID does not exist
+ * @throws Error if no employees are found for the branch ID
  */
-export const getAllEmployeesForABranch =  (branchId: string): Employees[] =>{
+export const getAllEmployeesForABranch = async (branchId: string): Promise<Employees[]> => {
+    // Get all employees from Firestore
+    const allEmployees: Employees[] = await getAllEmployees();
 
-    // Check if any employee is associated to this branch ID
-
-    const branchExists: boolean = employees.some((employee: Employees) => employee.branchId === branchId);
-    
-    if(!branchExists){
-        throw new Error(`Branch ID ${branchId} not found.`);
-    }
-    
     // Filter employees that match the branch ID
-    const foundEmployees: Employees []= employees.filter((employee: Employees) => employee.branchId === branchId);
+    const foundEmployees: Employees[] = allEmployees.filter(
+        (employee: Employees) => employee.branchId === branchId
+    );
+    
+    if(foundEmployees.length === 0){
+        throw new Error(`No employees found for branch ID ${branchId}.`);
+    }
 
-    return structuredClone(foundEmployees)
+    return structuredClone(foundEmployees);
 }
 
 /**
@@ -163,16 +162,15 @@ export const getAllEmployeesForABranch =  (branchId: string): Employees[] =>{
  * @returns An array of the Employees that belong to the specified department
  * @throws Error if no employees are found in the given department
  */
-export const getEmployeesByDepartment = (departmentName: string): Employees[] => {
+export const getEmployeesByDepartment = async (departmentName: string): Promise<Employees[]> => {
+    const allEmployees: Employees[] = await getAllEmployees();
 
-    const departmentExists: boolean = employees.some((employee: Employees) => employee.department.toLowerCase() === departmentName.toLowerCase());
+    const foundEmployees: Employees[] = allEmployees.filter(
+        (employee: Employees) => employee.department.toLowerCase() === departmentName.toLowerCase()
+    );
 
-    if (!departmentExists) {
-        throw new Error(`Department '${departmentName}' not found.`);
+    if (foundEmployees.length === 0) {
+        throw new Error(`No employees found in department '${departmentName}'.`);
     }
-
-    const foundEmployees: Employees[] = employees.filter((employee: Employees) => employee.department.toLowerCase() === departmentName.toLowerCase());
-
     return structuredClone(foundEmployees);
 };
-
