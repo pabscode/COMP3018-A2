@@ -175,3 +175,4 @@ export const getEmployeesByDepartment = (departmentName: string): Employees[] =>
 
     return structuredClone(foundEmployees);
 };
+

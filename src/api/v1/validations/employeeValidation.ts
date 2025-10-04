@@ -64,5 +64,45 @@ export const employeeSchema = {
                 "string.empty": "BranchId cannot be empty", 
             }),
         })
-    }
+    },
+
+    // GET /api/v1/employee/:id - Get Employee by ID
+    getById: {
+        params: Joi.object({
+            id: Joi.string().required().messages({
+                "any.required": "Employee ID is required",
+                "string.empty": "Employee ID cannot be empty",
+            }),
+        }),
+    },
+
+    // DELETE /api/v1/employee/:id - Delete Employee
+    delete: {
+        params: Joi.object({
+            id: Joi.string().required().messages({
+                "any.required": "Employee ID is required",
+                "string.empty": "Employee ID cannot be empty",
+            }),
+        }),
+    },
+
+    // GET /api/v1/employee/branch/:branchId - Get Employees by Branch
+    getByBranch: {
+        params: Joi.object({
+            branchId: Joi.string().required().messages({
+                "any.required": "Branch ID is required",
+                "string.empty": "Branch ID cannot be empty",
+            }),
+        }),
+    },
+
+    // GET /api/v1/employee/department/:departmentName - Get Employees by Department
+    getByDepartment: {
+        params: Joi.object({
+            departmentName: Joi.string().required().messages({
+                "any.required": "Department name is required",
+                "string.empty": "Department name cannot be empty",
+            }),
+        }),
+    },
 }
