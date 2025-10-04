@@ -50,21 +50,18 @@ export const createEmployee = async (employeeData: {
     phone: string;
     branchId: number; 
 }): Promise<Employees> => {
-    const newEmployee: Employees = {
+    try{
+        const newEmployee: Partial<Employees> ={
+            ...employeeData
+        };
 
-        // Creates a unique ID for the employee
-        id: Date.now(),
-        name: employeeData.name,
-        position: employeeData.position,
-        department: employeeData.department,
-        email: employeeData.email,
-        phone: employeeData.phone,
-        branchId: employeeData.branchId,
-    };
+        const employeeId: string = await createDocument(COLLECTION, newEmployee);
+        
+        return structuredClone({ employeeId, ...newEmployee } as Employees);
+    } catch (error: unknown) {
+        throw error;
+    }
 
-    employees.push(newEmployee);
-
-    return structuredClone(newEmployee)
 };
 
 /**
