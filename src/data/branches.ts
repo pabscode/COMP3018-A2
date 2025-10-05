@@ -20,7 +20,7 @@ export const branchesData: Branches[] = [
         id: "3", 
         name: "Arborg Branch", 
         address: "317-A Fisher Road, Arborg, MB, R0C 0A0", 
-        phone: 
+        phone: "204-555-3461" 
     },
     { 
         id: "4", 
@@ -59,7 +59,7 @@ export const branchesData: Branches[] = [
         phone: "506-632-0225" 
     },
     { 
-        id: "10", 
+        id: , 
         name: "Headingley Branch", 
         address: "500 McIntosh Rd, Headingley, MB, R4H 1B6", 
         phone: "204-999-5555" 
