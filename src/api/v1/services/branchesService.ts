@@ -1,6 +1,5 @@
 import { DocumentData, DocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
 import { Branches } from "../models/branchesModel";
-import { branchesData } from "src/data/branches";
 import {
     createDocument,
     getDocuments,
@@ -8,7 +7,6 @@ import {
     updateDocument,
     deleteDocument,
 } from "../repositories/firestoreRepository";
-import { error } from "console";
 
 const COLLECTION: string = "branches";
 

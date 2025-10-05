@@ -1,4 +1,4 @@
-import Joi, { ObjectSchema } from "joi";
+import Joi from "joi";
 
 /**
  * Employee Schema organised by request type
