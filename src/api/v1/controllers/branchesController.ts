@@ -124,7 +124,7 @@ export const getBranchById = async (
         const branch: Branches = await branchesService.getBranchById(id);
 
         res.status(HTTP_STATUS.OK).json(
-            successResponse("Branch retrieved sucessfully")
+            successResponse(branch, "Branch retrieved successfully")
         );
     } catch (error: unknown) {
         next(error);

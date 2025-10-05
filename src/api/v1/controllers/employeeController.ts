@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
 import { Employees } from "../models/employeeModel";
-import { errorResponse, successResponse } from "../models/responseModel";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and responses to retrieve all Employees
@@ -18,7 +18,7 @@ export const getAllEmployees = async (
     try{
         const employees: Employees[] = await employeeService.getAllEmployees();
         res.status(HTTP_STATUS.OK).json(
-            successResponse(employees, "Employee list returned successfully")
+            successResponse(employees, "Employees successfully retrieved")
         )
     }catch (error: unknown){
         next(error);
@@ -132,7 +132,7 @@ export const getEmployeeById = async (
         const employee: Employees = await employeeService.getEmployeeById(id);
 
         res.status(HTTP_STATUS.OK).json(
-            successResponse("Employee retrieved successfully.")
+            successResponse(employee, "Employee retrieved successfully")
         );
         
     } catch (error: unknown) {
@@ -180,7 +180,7 @@ export const getEmployeesByDepartment = async (
         const employees: Employees[] = await employeeService.getEmployeesByDepartment(departmentName);
 
         res.status(HTTP_STATUS.OK).json(
-            successResponse(employees, "Employees in department retrieved successfully.")
+            successResponse(employees, "Employees in department retrieved successfully")
         );
 
     }catch(error: unknown){

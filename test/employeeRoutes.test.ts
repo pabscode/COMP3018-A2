@@ -64,7 +64,7 @@ describe("Employee Routes", () => {
                 department: "Test department",
                 email: "Test email",
                 phone: "Test phone",
-                branchId: 2
+                branchId: "2",
             }
             await request(app).post("/api/v1/employee/").send(mockEmployee);
             expect(employeeController.createEmployee).toHaveBeenCalled();
