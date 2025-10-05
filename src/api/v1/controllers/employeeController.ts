@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, response } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
 import { Employees } from "../models/employeeModel";
+import { errorResponse, successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and responses to retrieve all Employees
@@ -16,10 +17,9 @@ export const getAllEmployees = async (
 ): Promise<void> => {
     try{
         const employees: Employees[] = await employeeService.getAllEmployees();
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee list returned successfully.",
-            data: employees,
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employee list returned successfully")
+        )
     }catch (error: unknown){
         next(error);
     }
@@ -47,10 +47,9 @@ export const createEmployee = async (
             branchId
         });
 
-        res.status(HTTP_STATUS.CREATED).json({
-            message: "Employee has been created successfully",
-            data: newEmployee
-        });
+        res.status(HTTP_STATUS.CREATED).json(
+            successResponse(newEmployee, "Employee has been created successfully")
+        );
         
     }catch (error: unknown){
         next(error);
@@ -83,10 +82,9 @@ export const updateEmployee = async (
             branchId
         })
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee information updated successfully.",
-            data: updatedEmployee
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedEmployee, "Employee information updated successfully")
+        )
 
     }catch (error: unknown){
         next(error);
@@ -109,9 +107,9 @@ export const deleteEmployee = async (
         const id: string = req.params.id;
 
         await employeeService.deleteEmployee(id);
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee deleted successfully",
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Employee deleted successfully")
+        );
     } catch (error: unknown) {
         next(error);
     }
@@ -133,10 +131,10 @@ export const getEmployeeById = async (
 
         const employee: Employees = await employeeService.getEmployeeById(id);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee retrieved successfully.",
-            data: employee,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Employee retrieved successfully.")
+        );
+        
     } catch (error: unknown) {
         next(error);
     }
@@ -155,20 +153,11 @@ export const getAllEmployeesForABranch = async (
 ): Promise<void> => {
     try{
         const branchId: string = req.params.branchId;
-    
-        if(!branchId || branchId.trim() === ""){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Invalid branch ID."
-            });
-            return;
-        }
-
         const employees: Employees[] = await employeeService.getAllEmployeesForABranch(branchId);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employees for branch retrieved successfully.",
-            data: employees,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employees for branch retrieved successfully")
+        );
 
     }catch (error: unknown){
         next(error);
@@ -188,20 +177,11 @@ export const getEmployeesByDepartment = async (
 ): Promise<void> => {
     try{
         const departmentName: string = req.params.departmentName;
-
-        if(!departmentName || departmentName.trim() === ""){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Department name is required."
-            });
-            return;
-        }
-        
         const employees: Employees[] = await employeeService.getEmployeesByDepartment(departmentName);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employees in department retrieved successfully.",
-            data: employees,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employees in department retrieved successfully.")
+        );
 
     }catch(error: unknown){
         next(error);

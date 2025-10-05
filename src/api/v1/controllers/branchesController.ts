@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as branchesService from "../services/branchesService";
 import { Branches } from "../models/branchesModel";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and responses to retrieve all Branches
@@ -16,10 +17,9 @@ export const getAllBranches = async (
 ): Promise<void> => {
     try{
         const branches: Branches[] = await branchesService.getAllBranches();
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch list returned successfully.",
-            data: branches,
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(branches, "Branches successfully retrieved")
+        )
     }catch (error: unknown){
         next(error);
     }
@@ -41,10 +41,9 @@ export const createBranch = async (
         const {name, address, phone} = req.body;
         const newBranch: Branches = await branchesService.createBranch({name, address, phone});
             
-        res.status(HTTP_STATUS.CREATED).json({
-            message: "Branch has been created successfully.",
-            data: newBranch
-        });
+        res.status(HTTP_STATUS.CREATED).json(
+            successResponse(newBranch, "Branch has been created successfully")
+        );
 
     } catch (error: unknown){
         next(error);
@@ -64,7 +63,7 @@ export const updateBranch = async (
     next: NextFunction,
 ): Promise<void> => {
     try{
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const {name, address, phone} = req.body;
 
@@ -74,10 +73,9 @@ export const updateBranch = async (
                 phone,
                 address
         })
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch information updated successfully.",
-            data: updatedBranch
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedBranch, "Branch information updated successfully")
+        )
 
     } catch (error: unknown){
         next(error);
@@ -100,9 +98,9 @@ export const deleteBranch = async (
         const id: string = req.params.id;
 
         await branchesService.deleteBranch(id);
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch deleted successfully",
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Branch deleted successfully")
+        );
     } catch (error: unknown) {
         next(error);
     }
@@ -125,10 +123,9 @@ export const getBranchById = async (
 
         const branch: Branches = await branchesService.getBranchById(id);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch retrieved successfully.",
-            data: branch,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Branch retrieved sucessfully")
+        );
     } catch (error: unknown) {
         next(error);
     }
