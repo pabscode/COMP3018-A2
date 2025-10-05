@@ -75,7 +75,7 @@ export const updateBranch = async (
     
     const branch: Branches = await getBranchById(id);
     if (!branch){
-        throw new error(`Employee with ID ${id} does not exist`);
+        throw new Error(`Employee with ID ${id} does not exist`);
     }
 
     const updatedBranch: Branches = {
