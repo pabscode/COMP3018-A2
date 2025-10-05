@@ -26,7 +26,7 @@ export const successResponse = <T>(
 });
 
 /**
- * Creates an error resposne object
+ * Creates an error response object
  * @param message - The error message
  * @param code - Optional error code for debugging
  * @returns

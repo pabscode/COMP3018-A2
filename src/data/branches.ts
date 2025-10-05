@@ -20,7 +20,7 @@ export const branchesData: Branches[] = [
         id: "3", 
         name: "Arborg Branch", 
         address: "317-A Fisher Road, Arborg, MB, R0C 0A0", 
-        phone: "204-555-3461" 
+        phone: 
     },
     { 
         id: "4", 
