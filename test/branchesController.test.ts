@@ -30,7 +30,7 @@ describe("Branches Controller", () => {
             };
 
             const createdBranch: Branches = { 
-                id: 1, 
+                id: "1", 
                 ...mockBranch 
             };
 
@@ -71,7 +71,7 @@ describe("Branches Controller", () => {
         it("should handle successful operation", async () => {
             const mockBranches: Branches[] = [
                 { 
-                    id: 1, 
+                    id: "1", 
                     name: "Test branch", 
                     address: "Test address",
                     phone: "Test phone"
@@ -108,7 +108,7 @@ describe("Branches Controller", () => {
     describe("getBranchById", () => {
         it("should handle a succesful retrieval", async ()=>{
             const mockBranch: Branches = {
-                    id: 1, 
+                    id: "1", 
                     name: "Test branch", 
                     address: "Test address",
                     phone: "Test phone"
@@ -158,7 +158,7 @@ describe("Branches Controller", () => {
             };
             
             const updatedBranch: Branches = {
-                id: 1,
+                id: "1",
                 ...mockReq.body
             };
 
@@ -209,7 +209,7 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.deleteBranch).toHaveBeenCalledWith(88);
+            expect(branchesService.deleteBranch).toHaveBeenCalledWith("88");
             expect(mockNext).toHaveBeenCalledWith(error);
         });
     })

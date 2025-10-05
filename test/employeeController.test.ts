@@ -30,11 +30,11 @@ describe("Employee Controller", () => {
                 department: "Test department",
                 email: "Test email",
                 phone: "Test phone",
-                branchId: 1
+                branchId: "1"
             }
 
             const createdEmployee: Employees = {
-                id: 1,
+                id: "1",
                 ...mockEmployee
             }
 
@@ -62,7 +62,7 @@ describe("Employee Controller", () => {
                 // missing email requirement
                 department: "Test department",
                 phone: "Test phone",
-                branchId: 1
+                branchId: "1"
             };
 
             await employeeController.createEmployee(
@@ -82,13 +82,13 @@ describe("Employee Controller", () => {
         it("should handle successful operation", async () => {
             const mockEmployees: Employees[] = [
                 { 
-                    id: 1,
+                    id: "1",
                     name: "Test employee",
                     position: "Test position",
                     department: "Test department",
                     email: "Test email",
                     phone: "Test phone",
-                    branchId: 1
+                    branchId: "1"
                 },
             ];
             (employeeService.getAllEmployees as jest.Mock).mockReturnValue(mockEmployees);
@@ -124,13 +124,13 @@ describe("Employee Controller", () => {
     describe("getEmployeeById", () => {
         it("should handle a successful retrieval", async () => {
             const mockEmployee: Employees = {
-                id: 1,
+                id: "1",
                 name: "Test Employee",
                 position: "Test Position",
                 department: "Test Department",
                 email: "Test email",
                 phone: "Test phone",
-                branchId: 1
+                branchId: "1"
             };
 
             (employeeService.getEmployeeById as jest.Mock).mockResolvedValue(mockEmployee);
@@ -241,13 +241,13 @@ describe("Employee Controller", () => {
         it("should handle a succesful retrieval", async () =>{
             const mockEmployees: Employees[] = [
                 {
-                    id: 1,
+                    id: "1",
                     name: "Test Employee 1",
                     position: "Test Position 1",
                     department: "Test Department 1",
                     email: "Test email 1",
                     phone: "Test phone 1",
-                    branchId: 1
+                    branchId: "1"
                 },
             ];
 
@@ -289,13 +289,13 @@ describe("Employee Controller", () => {
         it("should handle a successful retrieval", async () => {
             const mockEmployees: Employees[] = [
                 {
-                    id: 1,
+                    id: "1",
                     name: "Test Employee 1",
                     position: "Test Position 1",
                     department: "Test Department 1",
                     email: "Test email 1",
                     phone: "Test phone 1",
-                    branchId: 1
+                    branchId: "1"
                 },
             ];
 
