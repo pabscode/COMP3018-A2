@@ -69,7 +69,7 @@ export const createEmployee = async (employeeData: {
  * @param id - The ID of the employee to update
  * @param employeeData - The fields to update (name, position, department, email, phone, and/or branchId)
  * @returns The updated employee
- * @throws Error if employee with given ID is not found
+ * @throws Error if employee with given ID does not exist
  */
 export const updateEmployee = async (
     id: string,
@@ -78,7 +78,7 @@ export const updateEmployee = async (
     // check if the employee exists before updating
     const employee: Employees = await getEmployeeById(id);
     if (!employee) {
-        throw new Error(`Employee with ID ${id} not found`);
+        throw new Error(`Employee with ID ${id} does not exist`);
     }
 
     const updatedEmployee: Employees = {

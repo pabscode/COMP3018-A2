@@ -97,7 +97,7 @@ export const deleteBranch = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         await branchesService.deleteBranch(id);
         res.status(HTTP_STATUS.OK).json({
@@ -121,7 +121,7 @@ export const getBranchById = async (
 ): Promise<void> => {
     try {
 
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const branch: Branches = await branchesService.getBranchById(id);
 
