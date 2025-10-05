@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as branchesService from "../services/branchesService";
 import { Branches } from "../models/branchesModel";
-import { errorResponse, successResponse } from "../models/responseModel";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and responses to retrieve all Branches
@@ -102,13 +102,7 @@ export const deleteBranch = async (
             successResponse("Branch deleted successfully")
         );
     } catch (error: unknown) {
-        /*previous error was only had errorResponse
-        * missing (res.status).json
-        * errorResponse("Branch not found.")
-        */
-        res.status(HTTP_STATUS.NOT_FOUND).json(
-            errorResponse("Branch not found.")
-        );
+        next(error);
     }
 };
 
