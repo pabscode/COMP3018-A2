@@ -1,2 +1,6 @@
 node_modules/
 dist/
+
+.vscode/
+
+comp3018-a3-firebase-adminsdk-fbsvc-c597af7763.json

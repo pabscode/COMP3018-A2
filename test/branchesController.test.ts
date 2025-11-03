@@ -30,7 +30,7 @@ describe("Branches Controller", () => {
             };
 
             const createdBranch: Branches = { 
-                id: 1, 
+                id: "1", 
                 ...mockBranch 
             };
 
@@ -45,33 +45,18 @@ describe("Branches Controller", () => {
 
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch has been created successfully.",
+                status: "success",
+                message: "Branch has been created successfully",
                 data: createdBranch,
             });
         });
-        it("should return 400 when name is missing", async() =>{
-            mockReq.body = {
-                address: "New Street"
-            }
-            
-            await branchesController.createBranch(
-                mockReq as Request,
-                mockRes as Response,
-                mockNext
-            );
-
-            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
-            expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch name is required."
-            });
-        })
     });
     
     describe("getAllBranches", () => {
         it("should handle successful operation", async () => {
             const mockBranches: Branches[] = [
                 { 
-                    id: 1, 
+                    id: "1", 
                     name: "Test branch", 
                     address: "Test address",
                     phone: "Test phone"
@@ -88,7 +73,8 @@ describe("Branches Controller", () => {
 
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch list returned successfully.",
+                status: "success",
+                message: "Branches successfully retrieved",
                 data: mockBranches,
             });
         });
@@ -108,7 +94,7 @@ describe("Branches Controller", () => {
     describe("getBranchById", () => {
         it("should handle a succesful retrieval", async ()=>{
             const mockBranch: Branches = {
-                    id: 1, 
+                    id: "1", 
                     name: "Test branch", 
                     address: "Test address",
                     phone: "Test phone"
@@ -124,11 +110,12 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.getBranchById).toHaveBeenCalledWith(1);
+            expect(branchesService.getBranchById).toHaveBeenCalledWith("1");
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch retrieved successfully.",
-                data: mockBranch
+                status: "success",
+                data: mockBranch,
+                message: "Branch retrieved successfully",
             });
         })
 
@@ -144,7 +131,7 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.getBranchById).toHaveBeenCalledWith(6);
+            expect(branchesService.getBranchById).toHaveBeenCalledWith("6");
             expect(mockNext).toHaveBeenCalledWith(error);
             });
         });
@@ -158,7 +145,7 @@ describe("Branches Controller", () => {
             };
             
             const updatedBranch: Branches = {
-                id: 1,
+                id: "1",
                 ...mockReq.body
             };
 
@@ -170,10 +157,11 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.updateBranch).toHaveBeenCalledWith(1, mockReq.body);
+            expect(branchesService.updateBranch).toHaveBeenCalledWith("1", mockReq.body);
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch information updated successfully.",
+                status: "success",
+                message: "Branch information updated successfully",
                 data: updatedBranch
                 });
 
@@ -191,10 +179,11 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.deleteBranch).toHaveBeenCalledWith(1);
+            expect(branchesService.deleteBranch).toHaveBeenCalledWith("1");
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch deleted successfully",
+                status: "success",
+                data: "Branch deleted successfully",
                 });
         })
         it("should handle invalid ID", async () => {
@@ -209,7 +198,7 @@ describe("Branches Controller", () => {
                 mockNext
             );
 
-            expect(branchesService.deleteBranch).toHaveBeenCalledWith(88);
+            expect(branchesService.deleteBranch).toHaveBeenCalledWith("88");
             expect(mockNext).toHaveBeenCalledWith(error);
         });
     })

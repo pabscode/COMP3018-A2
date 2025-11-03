@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
 import { Employees } from "../models/employeeModel";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and responses to retrieve all Employees
@@ -16,10 +17,9 @@ export const getAllEmployees = async (
 ): Promise<void> => {
     try{
         const employees: Employees[] = await employeeService.getAllEmployees();
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee list returned successfully.",
-            data: employees,
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employees successfully retrieved")
+        )
     }catch (error: unknown){
         next(error);
     }
@@ -37,49 +37,20 @@ export const createEmployee = async (
     next: NextFunction,
 ): Promise<void> => {
     try{
-        // Validation for required Employee fields.
-        if (!req.body.name){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee name is required."
-            })
+        const {name, position, department, email, phone, branchId} = req.body;
+        const newEmployee: Employees = await employeeService.createEmployee({
+            name,
+            position,
+            department,
+            email,
+            phone,
+            branchId
+        });
 
-        } else if (!req.body.position){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee position is required."
-            })
-
-        } else if (!req.body.department){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee department is required."
-            })
-        } else if (!req.body.email){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee email is required."
-            })
-        } else if (!req.body.phone){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee phone is required."
-            })
-        } else if (!req.body.branchId){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee branch ID is required."
-            })
-        } else {
-            const {name, position, department, email, phone, branchId} = req.body;
-            const newEmployee: Employees = await employeeService.createEmployee({
-                name,
-                position,
-                department,
-                email,
-                phone,
-                branchId
-            });
-
-            res.status(HTTP_STATUS.CREATED).json({
-                message: "Employee has been created successfully",
-                data: newEmployee
-            });
-        } 
+        res.status(HTTP_STATUS.CREATED).json(
+            successResponse(newEmployee, "Employee has been created successfully")
+        );
+        
     }catch (error: unknown){
         next(error);
     }
@@ -97,7 +68,7 @@ export const updateEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const {name, position, department, email, phone, branchId} = req.body;
         
@@ -111,10 +82,9 @@ export const updateEmployee = async (
             branchId
         })
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee information updated successfully.",
-            data: updatedEmployee
-        })
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedEmployee, "Employee information updated successfully")
+        )
 
     }catch (error: unknown){
         next(error);
@@ -134,12 +104,12 @@ export const deleteEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         await employeeService.deleteEmployee(id);
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee deleted successfully",
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Employee deleted successfully")
+        );
     } catch (error: unknown) {
         next(error);
     }
@@ -157,15 +127,14 @@ export const getEmployeeById = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-
-        const id: number = parseInt(req.params.id);
+        const id: string = req.params.id;
 
         const employee: Employees = await employeeService.getEmployeeById(id);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee retrieved successfully.",
-            data: employee,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employee, "Employee retrieved successfully")
+        );
+        
     } catch (error: unknown) {
         next(error);
     }
@@ -183,21 +152,12 @@ export const getAllEmployeesForABranch = async (
     next: NextFunction
 ): Promise<void> => {
     try{
-        const branchId: number = parseInt(req.params.branchId);
-    
-        if(isNaN(branchId)){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Invalid branch ID."
-            });
-
-        }
-
+        const branchId: string = req.params.branchId;
         const employees: Employees[] = await employeeService.getAllEmployeesForABranch(branchId);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employees for branch retrieved successfully.",
-            data: employees,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employees for branch retrieved successfully")
+        );
 
     }catch (error: unknown){
         next(error);
@@ -217,22 +177,13 @@ export const getEmployeesByDepartment = async (
 ): Promise<void> => {
     try{
         const departmentName: string = req.params.departmentName;
-
-        if(!departmentName || departmentName.trim() === ""){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Department name is required."
-            });
-        }
-        
         const employees: Employees[] = await employeeService.getEmployeesByDepartment(departmentName);
 
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employees in department retrieved successfully.",
-            data: employees,
-        });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(employees, "Employees in department retrieved successfully")
+        );
 
     }catch(error: unknown){
         next(error);
     }
 }
-
