@@ -2,6 +2,8 @@
 import express, { Express } from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import { getHelmetConfig } from "config/helmetConfig";
 
 // Load environment variables before internal imports
 dotenv.config();
@@ -21,6 +23,8 @@ interface HealthCheckResponse {
     version: string;
 }
 // Middleware START
+app.use(helmet());
+app.use(helmet(getHelmetConfig()));
 app.use(morgan("combined"));
 
 // Ensures incoming body is correctly parsed to JSON, otherwise req.body would be undefined
