@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/pabscode/COMP3018-A2#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/jest": "^30.0.0",
     "@types/joi": "^17.2.2",
     "@types/morgan": "^1.9.10",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@types/express": "^5.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "firebase-admin": "^13.5.0",

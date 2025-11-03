@@ -3,6 +3,7 @@ import express, { Express } from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import cors from "cors";
 import { getHelmetConfig } from "config/helmetConfig";
 
 // Load environment variables before internal imports
@@ -46,7 +47,7 @@ app.use((req, res, next) => {
 
     next();
 });
-
+app.use(cors());
 app.use(morgan("combined"));
 
 // Ensures incoming body is correctly parsed to JSON, otherwise req.body would be undefined
