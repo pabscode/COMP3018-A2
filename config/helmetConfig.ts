@@ -7,12 +7,10 @@ export const getHelmetConfig = (): HelmetOptions => {
         // disable for API
         contentSecurityPolicy: false,
         // // always hide the server info
-        // hidePoweredyBy: true,
+        hidePoweredBy: true,
         // always prevent MIME sniffing
         noSniff: true,
 
-        //prevents 
-        ieNoOpen: true
     };
 
     if (isDevelopment) {
