@@ -1,6 +1,10 @@
 // import the express application and type definition
 import express, { Express } from "express";
 import morgan from "morgan";
+import dotenv from "dotenv";
+
+// Load environment variables before internal imports
+dotenv.config();
 
 import employeeRoutes from "./api/v1/routes/employeesRoutes";
 import branchesRoutes from "./api/v1/routes/branchesRoutes";
