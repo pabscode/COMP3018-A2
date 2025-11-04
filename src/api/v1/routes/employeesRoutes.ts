@@ -12,8 +12,7 @@ const router: Router = express.Router();
  * /employee:
  *   get:
  *     summary: Retrieves a list of employees
- *     tags:
- *       - Employee
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -77,8 +76,7 @@ router.get("/:id", validateRequest(employeeSchema.getById), employeeController.g
  * /employee/branch/{branchId}:
  *   get:
  *     summary: Retrieves all employees for a specific branch
- *     tags:
- *       - Employee
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -140,8 +138,7 @@ router.get("/branch/:branchId", validateRequest(employeeSchema.getByBranch), emp
  * /employee/department/:departmentName:
  *   get:
  *     summary: Retrieves all employees for a specific department
- *     tags:
- *       - Employee
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -161,21 +158,6 @@ router.get("/branch/:branchId", validateRequest(employeeSchema.getByBranch), emp
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Employee'
- *             example: 
- *               - id: "HC3mXN6Dxyg4eaSjhBxY"
- *                 name: "John Black"
- *                 position: "Branch Manager"
- *                 department: "Management"
- *                 email: "john.black@pixell-river.com"
- *                 phone: "204-555-04667"
- *                 branchId: "6"
- *               - id: "ABC123XYZ456"
- *                 name: "Sarah Johnson"
- *                 position: "Senior Developer"
- *                 department: "Management"
- *                 email: "sarah.johnson@pixell-river.com"
- *                 phone: "204-555-01234"
- *                 branchId: "6"
  *       404:
  *         description: Department not found
  *         content:
