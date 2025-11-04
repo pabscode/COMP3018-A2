@@ -198,7 +198,112 @@ router.get("/branch/:branchId", validateRequest(employeeSchema.getByBranch), emp
  *                   example: "Department Name is required"
  */
 router.get("/department/:departmentName", validateRequest(employeeSchema.getByDepartment), employeeController.getEmployeesByDepartment);
+/**
+ * @openapi
+ * /employee:
+ *   post:
+ *     summary: Create a new employee
+ *     tags: [Employee]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - position
+ *               - department
+ *               - email
+ *               - phone
+ *               - branchId
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "John Black"
+ *               position:
+ *                 type: string
+ *                 example: "Branch Manager"
+ *               department:
+ *                 type: string
+ *                 example: "Management"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "john.black@pixell-river.com"
+ *               phone:
+ *                 type: string
+ *                 example: "204-555-04667"
+ *               branchId:
+ *                 type: string
+ *                 example: "6"
+ *     responses:
+ *       201:
+ *         description: Employee created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Employee'
+ *       400:
+ *         description: Invalid input data
+ */
 router.post("/", validateRequest(employeeSchema.create), employeeController.createEmployee);
+/**
+ * @openapi
+ * /employee/{id}:
+ *   put:
+ *     summary: Update an existing employee
+ *     tags: [Employee]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The employee ID
+ *         example: "HC3mXN6Dxyg4eaSjhBxY"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "John Gray"
+ *               position:
+ *                 type: string
+ *                 example: "Branch Manager"
+ *               department:
+ *                 type: string
+ *                 example: "Management"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "john.black@pixell-river.com"
+ *               phone:
+ *                 type: string
+ *                 example: "204-555-04667"
+ *               branchId:
+ *                 type: string
+ *                 example: "6"
+ *     responses:
+ *       200:
+ *         description: Employee updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Employee'
+ *       400:
+ *         description: Invalid input data
+ *       404:
+ *         description: Employee not found
+ */
 router.put("/:id", validateRequest(employeeSchema.update), employeeController.updateEmployee);
 router.delete("/:id", validateRequest(employeeSchema.delete), employeeController.deleteEmployee);
 
