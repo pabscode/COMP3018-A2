@@ -305,6 +305,38 @@ router.post("/", validateRequest(employeeSchema.create), employeeController.crea
  *         description: Employee not found
  */
 router.put("/:id", validateRequest(employeeSchema.update), employeeController.updateEmployee);
+/**
+ * @openapi
+ * /employee/{id}:
+ *   delete:
+ *     summary: Delete an employee
+ *     tags: [Employee]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The employee ID
+ *         example: "HC3mXN6Dxyg4eaSjhBxY"
+ *     responses:
+ *       200:
+ *         description: Employee deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Employee deleted successfully"
+ *       400:
+ *         description: Invalid employee ID
+ *       404:
+ *         description: Employee not found
+ */
 router.delete("/:id", validateRequest(employeeSchema.delete), employeeController.deleteEmployee);
 
 export default router;
