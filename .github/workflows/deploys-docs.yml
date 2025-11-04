@@ -3,7 +3,7 @@ name: Deploy Documentation
 on:
     workflow_dispatch: # Allows manual triggering from Actions tab
     push:
-        branches: [development, main] # Auto-runs on push to these branches
+        branches: [development, main, a5-branch] # Auto-runs on push to these branches
 
 jobs:
     deploy-docs:
