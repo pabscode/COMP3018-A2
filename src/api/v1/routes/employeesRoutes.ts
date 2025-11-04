@@ -248,6 +248,14 @@ router.get("/department/:departmentName", validateRequest(employeeSchema.getByDe
  *               $ref: '#/components/schemas/Employee'
  *       400:
  *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Name is required"
  */
 router.post("/", validateRequest(employeeSchema.create), employeeController.createEmployee);
 /**
@@ -300,9 +308,25 @@ router.post("/", validateRequest(employeeSchema.create), employeeController.crea
  *             schema:
  *               $ref: '#/components/schemas/Employee'
  *       400:
- *         description: Invalid input data
+ *         description: Invalid employee ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Employee ID is required"
  *       404:
  *         description: Employee not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Employee not found"
  */
 router.put("/:id", validateRequest(employeeSchema.update), employeeController.updateEmployee);
 /**
@@ -334,8 +358,24 @@ router.put("/:id", validateRequest(employeeSchema.update), employeeController.up
  *                   example: "Employee deleted successfully"
  *       400:
  *         description: Invalid employee ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Employee ID is required"
  *       404:
  *         description: Employee not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Employee not found"
  */
 router.delete("/:id", validateRequest(employeeSchema.delete), employeeController.deleteEmployee);
 
