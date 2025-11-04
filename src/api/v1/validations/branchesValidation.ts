@@ -1,6 +1,36 @@
 import Joi from "joi";
 
 /**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Branch:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - address
+ *         - phone
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: Unique identifier for the branch
+ *           example: "wl3jQESZeHi6QNDnpbJO"
+ *         name:
+ *           type: string
+ *           description: Name of the branch
+ *           example: "Winnipeg Branch"
+ *         address:
+ *           type: string
+ *           description: Branch address
+ *           example: "1300 Joe St, Winnipeg, MB, R2X 4M5"
+ *         phone:
+ *           type: string
+ *           description: Branch phone number
+ *           example: "204-456-0022"
+ */
+
+/**
  * Branches Schema organised by request type
  */
 export const branchesSchema = {
