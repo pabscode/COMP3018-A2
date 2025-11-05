@@ -92,3 +92,45 @@
 
 - When your server is running, you can view the documentation via Swagger UI: 
     - http://localhost:3000/api-docs 
+
+# Security Configuration Documentation 
+
+## Helmet Configuration:
+
+- Included in development & production:
+    - `contentSecurityPolicy: false` - Disabled for APIs
+    - `hidePoweredBy: true` - Hides Express server info
+    - `noSniff: true` - Prevents file type guessing
+
+- Included in development for easy testing:
+    - `hsts: false` - No HTTPS enforcement in dev
+
+- Included in production for maximum protection:
+    - `hsts: { maxAge: 31536000 }`- Forces HTTPS for 1 year
+    - `frameguard: { action: "deny" }`- Prevents clickjacking
+    - `referrerPolicy: { policy: "no-referrer" }` - Hides referrer info
+
+## CORS (Cross-Origin-Access) Configuration:
+
+- Included in development & production:
+  - `credentials: true` - Allows authentication headers and cookies
+
+- Included in development for easy testing:
+  - `origin: true` - Allows all origins (any website can access)
+
+- Included in production for maximum protection:
+  - `origin: ALLOWED_ORIGINS` - Only specific domains allowed
+  - `methods: ["GET", "POST", "PUT", "DELETE"]` - Restricts HTTP methods
+  - `allowedHeaders: ["Content-Type", "Authorization"]` - Only allows necessary headers
+  - `maxAge: 36000` - Browser caches CORS check for 10 hours
+
+# Environment Variables Secure Setup: Already listed in Installation Instructions but reiterating here:
+- Create a .env file:
+    - NODE_ENV=development
+    - PORT=3000
+    - ALLOWED_ORIGINS=https://INSERT_YOUR_APPLICAITON.com
+    - FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
+    - FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nINSERT_YOUR_KEY\n-----END PRIVATE KEY-----\n"
+    - FIREBASE_CLIENT_EMAIL=INSERT_CLIENT_EMAIL
+
+### Important: Never commit .env to Git! *I MADE THIS MISTAKE D:*
