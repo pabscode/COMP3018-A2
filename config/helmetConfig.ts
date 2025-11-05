@@ -25,9 +25,7 @@ export const getHelmetConfig = (): HelmetOptions => {
     return {
         ...baseConfig,
         hsts: {
-            // one year in seconds
             maxAge: 3153600,
-            // this allows
             includeSubDomains: true,
             preload: true,
         },

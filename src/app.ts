@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
 import { getHelmetConfig } from "config/helmetConfig";
+import { getCorsOptions } from "config/corsConfig";
 import setupSwagger from "config/swagger";
 
 // Load environment variables before internal imports
@@ -30,25 +31,9 @@ app.use(helmet(getHelmetConfig()));
 
 // Adding custom security headers beyond Helmet defaults
 app.use(helmet());
-
-// Add custom security headers
-app.use((req, res, next) => {
-    // Prevent caching of sensitive endpoints
-    if (req.path.includes("/admin") || req.path.includes("/user")) {
-        res.setHeader(
-            "Cache-Control",
-            "no-store, no-cache, must-revalidate, private"
-        );
-        res.setHeader("Pragma", "no-cache");
-        res.setHeader("Expires", "0");
-    }
-
-    // Add rate limiting information
-    res.setHeader("X-RateLimit-Policy", "100-per-hour");
-
-    next();
-});
+app.use(helmet(getHelmetConfig()))
 app.use(cors());
+app.use(cors(getCorsOptions()))
 app.use(morgan("combined"));
 
 // Ensures incoming body is correctly parsed to JSON, otherwise req.body would be undefined
