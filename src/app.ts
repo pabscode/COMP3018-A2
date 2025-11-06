@@ -26,9 +26,6 @@ interface HealthCheckResponse {
     version: string;
 }
 // Middleware START
-app.use(helmet());
-app.use(helmet(getHelmetConfig()));
-
 // Adding custom security headers beyond Helmet defaults
 app.use(helmet());
 app.use(helmet(getHelmetConfig()))
